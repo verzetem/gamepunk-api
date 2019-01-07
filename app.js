@@ -4,13 +4,24 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const port = 3030
 
+const usersRoutes = require('./routes/users')
+const usersFavRoutes = require('./routes/usersFavorites')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
 app.get('/', (req, res, next) => {
-	res.send(`Express Basic Server on port ${port}`)
+	res.json({
+		message: `GamePunk API Server running on port ${port}`,
+		message2: 'use /users or /users_favorites routes'
+	})
 })
+
+app.get('/users', usersRoutes)
+
+app.get('/users_favorites', usersFavRoutes)
+
 
 app.use(notFound)
 // General purpose 'catch' all errors
