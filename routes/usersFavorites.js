@@ -5,9 +5,8 @@ const knex = require('../db/connection.js')
 
 router.get('/', (req, res, next) => {
   knex('user_favorite')
-    .then(response => {
-      res.json({ favorites: response })
-    })
+  	.orderBy('id', 'asc')
+    .then(resp => res.json(resp))
 })
 
 router.get('/:id', (req, res, next) => {

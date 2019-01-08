@@ -2,21 +2,20 @@ const express = require('express')
 const router = express.Router()
 
 const knex = require('../db/connection.js')
+const usersQuery = require('../handlers/usersQuery')
+
 
 router.get('/', (req, res, next) => {
-  knex('users')
-    .then(response => {
-      res.json({ users: response })
-    })
+  return usersQuery.list()
+  	.orderBy('id', 'asc')
+    .then(resp => res.json(resp))
 })
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id
-  knex('users')
+  return usersQuery.list()
     .where('id', id)
-    .then(response => {
-      res.json({ user: response[0] })
-    })
+    .then(response => res.json(response[0]))
   })
 
 
