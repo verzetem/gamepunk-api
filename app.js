@@ -5,21 +5,23 @@ const bodyParser = require('body-parser')
 const port = 3030
 
 const usersRoutes = require('./routes/users')
-const usersFavRoutes = require('./routes/usersFavorites.js')
+const favRoutes = require('./routes/favorites.js')
+const userFavRoutes = require('./routes/userFavorites.js')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
-// app.get('/', (req, res, next) => {
-// 	res.json({
-// 		message: `GamePunk API Server running on port ${port}`,
-// 		message2: 'use /users or /users_favorites routes'
-// 	})
-// })
+app.get('/', (req, res, next) => {
+	res.json({
+		message: `GamePunk API running on port ${port}`,
+		message2: 'use /users or /users_favorites routes'
+	})
+})
 
 app.use('/users', usersRoutes)
-app.use('/favorites', usersFavRoutes)
+app.use('/favorites', favRoutes)
+app.use('/userfavorites', userFavRoutes)
 
 
 app.use(notFound)

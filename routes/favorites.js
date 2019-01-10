@@ -2,27 +2,35 @@ const express = require('express')
 const router = express.Router()
 
 const knex = require('../db/connection.js')
+const favoritesQuery = require('../handlers/favoritesQuery')
 
 router.get('/', (req, res, next) => {
-  knex('user_favorite')
+	return favoritesQuery.list()
   	.orderBy('id', 'asc')
-    .then(resp => res.json(resp))
+    .then(response => {
+			res.json({ favorites: response })
+    })
 })
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id
-  knex('user_favorite')
+  return favoritesQuery.list()
     .where('id', id)
     .then(response => {
-      res.json({ favorite: response[0] })
+    	response.length === 0 
+    		? 
+    		res.json({ error: "Favorite not Found", url: req.originalUrl}) 
+    		: 
+    		res.json({ favorite: response[0] })
     })
   })
 
 
 router.post('/', (req, res, next) => {
 	const body = req.body
-	knex('user_favorite')
+	return favoritesQuery.list()
 		.insert(body)
+		.returning('*')
 		.then(response => {
 			res.json({ favorite: response })
 		})
@@ -31,7 +39,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 	const body = req.body
 	const id = req.params.id
-	knex('user_favorite')
+	return favoritesQuery.list()
 		.where('id', id)
 		.update(body)
 		.returning('*')
@@ -42,7 +50,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
 	const id = req.params.id
-	knex('user_favorite')
+	return favoritesQuery.list()
 		.where('id', id)
 		.del()
 		.returning('*')

@@ -1,9 +1,9 @@
-
+// .inTable('users')
 exports.up = function(knex, Promise) {
 	return knex.schema.createTable('user_favorite', function (table) {
 	  table.increments()
-	  table.string('favorite')
-	  table.integer('user_id').references('id').inTable('users').unsigned().onDelete('cascade')
+	  table.integer('users_id').references('users.id').unsigned().onDelete('cascade')
+	  table.integer('favorites_id').references('favorites.id').unsigned().onDelete('cascade')
 	})  
 }
 

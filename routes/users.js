@@ -8,21 +8,30 @@ const usersQuery = require('../handlers/usersQuery')
 router.get('/', (req, res, next) => {
   return usersQuery.list()
   	.orderBy('id', 'asc')
-    .then(resp => res.json(resp))
+    .then(response => {
+    	res.json({ users: response })
+    })
 })
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id
   return usersQuery.list()
     .where('id', id)
-    .then(response => res.json(response[0]))
+    .then(response => {
+    	response.length === 0 
+    		? 
+    		res.json({ error: "User not Found", url: req.originalUrl}) 
+    		: 
+    		res.json({ user: response[0] })
+    })
   })
 
 
 router.post('/', (req, res, next) => {
 	const body = req.body
-	knex('users')
+	return usersQuery.list()
 		.insert(body)
+		.returning('*')
 		.then(response => {
 			res.json({ user: response })
 		})
@@ -31,7 +40,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 	const body = req.body
 	const id = req.params.id
-	knex('users')
+	return usersQuery.list()
 		.where('id', id)
 		.update(body)
 		.returning('*')
@@ -42,7 +51,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
 	const id = req.params.id
-	knex('users')
+	return usersQuery.list()
 		.where('id', id)
 		.del()
 		.returning('*')
