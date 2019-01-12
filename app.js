@@ -5,8 +5,9 @@ const bodyParser = require('body-parser')
 const port = 3030
 
 const usersRoutes = require('./routes/users')
-const favRoutes = require('./routes/favorites.js')
-const userFavRoutes = require('./routes/userFavorites.js')
+const favRoutes = require('./routes/favorites')
+const userFavRoutes = require('./routes/userFavorites')
+const scrapedArticles = require('./routes/scrapedArticles')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,6 +23,7 @@ app.get('/', (req, res, next) => {
 app.use('/users', usersRoutes)
 app.use('/favorites', favRoutes)
 app.use('/userfavorites', userFavRoutes)
+app.use('/articles', scrapedArticles)
 
 
 app.use(notFound)

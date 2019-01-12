@@ -21,7 +21,7 @@ router.get('/:id', (req, res, next) => {
     		? 
     		res.json({ error: "Not Found", url: req.originalUrl}) 
     		: 
-    		res.json({ user_favorites: response[0] })
+    		res.json({ user_favorites: response })
       })
   })
 
