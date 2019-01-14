@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
 	  table.string('article_url')
 	  table.string('title')
 	  table.string('img_url')
+	  table.string('favorited')
 	  table.string('publisher_id')
 	})  
 };

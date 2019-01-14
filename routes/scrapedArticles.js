@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 	return scrapedArticlesQuery.list()
   	.orderBy('id', 'asc')
     .then(response => {
-			res.json({ favorites: response })
+			res.json({ articles: response })
     })
 })
 
@@ -19,9 +19,9 @@ router.get('/:id', (req, res, next) => {
     .then(response => {
     	response.length === 0 
     		? 
-    		res.json({ error: "Favorite not Found", url: req.originalUrl}) 
+    		res.json({ error: "Article not Found", url: req.originalUrl}) 
     		: 
-    		res.json({ favorite: response[0] })
+    		res.json({ article: response[0] })
     })
   })
 
@@ -32,7 +32,7 @@ router.post('/', (req, res, next) => {
 		.insert(body)
 		.returning('*')
 		.then(response => {
-			res.json({ favorite: response })
+			res.json({ article: response })
 		})
 	})
 
@@ -42,9 +42,9 @@ router.put('/:id', (req, res, next) => {
 	return scrapedArticlesQuery.list()
 		.where('id', id)
 		.update(body)
-		.returning('*')
+		// .returning('*')
 		.then(response => {
-			res.json({ favorite: response })
+			res.json({ article: response })
 		})
 	})
 
@@ -55,7 +55,7 @@ router.delete('/:id', (req, res, next) => {
 		.del()
 		.returning('*')
 		.then(response => {
-			res.json({ deleted: response })
+			res.json({ deleted_article: response })
 		})
 	})
 
