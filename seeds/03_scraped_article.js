@@ -1,7 +1,7 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex.raw('DELETE FROM "scraped_article"; ALTER SEQUENCE scraped_article_id_seq RESTART WITH 37;')
+  return knex.raw('DELETE FROM "scraped_article"; ALTER SEQUENCE scraped_article_id_seq RESTART WITH 38;')
     .then(function () {
       // Inserts seed entries
       return knex('scraped_article').insert([
@@ -221,7 +221,8 @@ exports.seed = function(knex, Promise) {
           favorited: false,
           publisher_id: 2 
         },
-        {id: 28,
+        {
+          id: 28,
           article_url: 'https://kotaku.com/return-of-the-obra-dinn-the-kotaku-review-1829797772',
           title: 'Return of the Obra Dinn: The K...',
           img_url: 'https://i.kinja-img.com/gawker-media/image/upload/c_fill,fl_progressive,g_center,h_77,q_80,w_137/btmrdokhb46ci8xfhigt.jpg',
