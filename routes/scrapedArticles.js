@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const scraper = require('../scraper/scraper')
+const util = require('util')
+const scrapeIt = util.promisify(scraper)
 
 const knex = require('../db/connection.js')
 const scrapedArticlesQuery = require('../handlers/scrapedArticlesQuery')
@@ -10,6 +13,11 @@ router.get('/', (req, res, next) => {
     .then(response => {
 			res.json({ articles: response })
     })
+})
+
+router.get('/update', (req, res, next) => {
+	scraper();
+	res.json({message: 'scraping initiated...'})
 })
 
 router.get('/:id', (req, res, next) => {
@@ -24,7 +32,6 @@ router.get('/:id', (req, res, next) => {
     		res.json({ article: response[0] })
     })
   })
-
 
 router.post('/', (req, res, next) => {
 	const body = req.body
