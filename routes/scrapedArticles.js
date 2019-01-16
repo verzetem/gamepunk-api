@@ -36,11 +36,9 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
 	const body = req.body
 	const chunkSize = req.body.length
-	console.log("chunk size",chunkSize)
 	const urls = body.map(article => {
 		return article.article_url
 	})
-	console.log("urls", urls)
 	const requests = body.map(article => {
 		return knex('scraped_article')
 		.where('article_url', article.article_url)
@@ -55,13 +53,11 @@ router.post('/', (req, res, next) => {
 			}
 		})
 		.then(article => {
-			console.log("article breh",article)
 			return article
 		})
 	})
 	Promise.all(requests)
 		.then(response => {
-			console.log("response length",response.length)
 			res.json(response)
 		})
 })
@@ -72,7 +68,7 @@ router.put('/:id', (req, res, next) => {
 	return scrapedArticlesQuery.list()
 		.where('id', id)
 		.update(body)
-		// .returning('*')
+		.returning('*')
 		.then(response => {
 			res.json({ article: response })
 		})

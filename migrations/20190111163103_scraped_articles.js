@@ -2,11 +2,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('scraped_article', function (table) {
 	  table.increments()
-	  table.string('article_url')
-	  table.string('title')
-	  table.string('img_url')
-	  table.string('favorited')
-	  table.string('date_time')
+	  table.string('article_url').notNullable()
+	  table.string('title').notNullable()
+	  table.string('img_url').notNullable()
+	  table.string('favorited').notNullable()
+	  table.string('date_time').notNullable()
 	  table.string('publisher_id')
 	})  
 };
